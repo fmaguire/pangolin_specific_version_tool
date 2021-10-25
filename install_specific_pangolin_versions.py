@@ -25,7 +25,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # provides current pangolin install details
-    print("Current pangolin install:")
+    print("## Current pangolin install:")
     subprocess.run(["pangolin", "--all-versions"], check=True)
 
 
@@ -55,5 +55,5 @@ if __name__ == "__main__":
 
     # provides pangolin install details after update to specific versions in
     # supplied version file
-    print("\nPangolin and dependencies updated to:")
+    print("\n## Pangolin and dependencies updated to:")
     subprocess.run(["pangolin", "--all-versions"], check=True)
