@@ -1,0 +1,5 @@
+pangolin: v3.1.14
+pangolearn: 2021-10-13
+constellations: v0.0.18
+scorpio: v0.3.13
+pango-designation: v1.2.88
