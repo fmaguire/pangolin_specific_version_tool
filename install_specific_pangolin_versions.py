@@ -38,6 +38,7 @@ if __name__ == "__main__":
         for line in fh:
             line = line.split(':')
             dependency = line[0].strip()
+            dependency = dependency.replace(" ", "-").lower()
             version = line[1].strip()
 
             if dependency not in valid_deps:
