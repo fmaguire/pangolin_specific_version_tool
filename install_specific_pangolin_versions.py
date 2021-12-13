@@ -14,7 +14,7 @@ pango-designation: v1.2.88
 
 if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(description="Update pangolin in conda env "
+    parser = argparse.ArgumentParser(description="Modify pangolin in conda env "
                                                  "to specific versions using "
                                                  "pip")
     parser.add_argument("--versions_file", required=True, type=str,
@@ -25,14 +25,37 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # provides current pangolin install details
-    print("## Current pangolin install:")
-    subprocess.run(["pangolin", "--all-versions"], check=True)
+    # and load them in a dict for comparison
+    print("## Existing pangolin install:")
+    installed_versions = subprocess.run(["pangolin", "--all-versions"],
+                                        check=True,
+                                        stdout=subprocess.PIPE)
+
+    installed_versions = installed_versions.stdout.decode('utf-8')
+    print(installed_versions)
+    installed_ver_dict = {}
+    for dep_ver in map(str.strip, installed_versions.split('\n')):
+        # skip empty line at end
+        if len(dep_ver) == 0:
+            continue
+
+        dependency, version = dep_ver.split(': ')
+        if dependency != "pangolearn" and not version.startswith("v"):
+            version = "v" + version
+
+        # tidy up pango-designation version for dep we actually change
+        # instead of packages with pangolearn/usher models
+        if dependency == 'pango-designation aliases':
+            installed_ver_dict['pango-designation'] = version
+        else:
+            installed_ver_dict[dependency] = version
 
 
     # parse the dependency version file provided, validate real dependencies
     # tidy up version strings, and then use pip to update
     valid_deps = ['pangolin', 'pangolearn', 'constellations',
                   'scorpio', 'pango-designation']
+    print("## Changing installed versions as needed:")
     versions = {}
     with open(args.versions_file) as fh:
         for line in fh:
@@ -41,20 +64,27 @@ if __name__ == "__main__":
             dependency = dependency.replace(" ", "-").lower()
             version = line[1].strip()
 
+            # check for invalid deps
             if dependency not in valid_deps:
                 raise ValueError(f"{dependency} is not a valid pangolin "
                                  f"dependency. Must be in {valid_deps}")
 
+            # tidy up strings
             if dependency != "pangolearn" and not version.startswith("v"):
                 version = "v" + version
 
-            subprocess.run([sys.executable, '-m', 'pip', 'install',
-                            f"git+https://github.com/cov-lineages/{dependency}.git@{version}"],
-                            check=True,
-                            stdout=subprocess.DEVNULL,
-                            stderr=subprocess.DEVNULL)
+            installed_version = installed_ver_dict[dependency]
+            if version == installed_version:
+                print(f"{dependency} not updated as requested {version} already installed")
+            else:
+                print(f"Changing {dependency} from {installed_version} to {version}")
+                subprocess.run([sys.executable, '-m', 'pip', 'install',
+                                f"git+https://github.com/cov-lineages/{dependency}.git@{version}"],
+                                check=True,
+                                stdout=subprocess.DEVNULL,
+                                stderr=subprocess.DEVNULL)
 
     # provides pangolin install details after update to specific versions in
     # supplied version file
-    print("\n## Pangolin and dependencies updated to:")
+    print("\n## Pangolin and dependencies now:")
     subprocess.run(["pangolin", "--all-versions"], check=True)
