@@ -1,6 +1,6 @@
 # Tool to install a specific set of pangolin dependency versions
 
-Simple script to support upgrading/downgrading a [pangolin](https://github.com/cov-lineages/pangolin) 
+Simple script to support upgrading/downgrading a [pangolin](https://github.com/cov-lineages/pangolin) v4
 install to a specific version of pangolin with specific dependency versions (e.g., [assignment models](https://github.com/cov-lineages/pangoLEARN), 
 [scorpio](https://github.com/cov-lineages/scorpio), 
 [constellations](https://github.com/cov-lineages/constellations), 
@@ -20,11 +20,10 @@ This doesn't have to include all dependencies if not all need pinned to a specif
 
 `example_input.txt` contains:
 ```
-pangolin: v3.1.14
-pangolearn: 2021-10-13
-constellations: v0.0.18
-scorpio: v0.3.13
-pango-designation: v1.2.88
+pangolin: 4.0
+pangolin-data: 1.2.133
+constellations: 0.1.4
+scorpio: 0.3.16
 ```
 
 ## Example Usage

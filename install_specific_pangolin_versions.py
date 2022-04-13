@@ -5,11 +5,10 @@ import argparse
 import subprocess
 
 """
-pangolin: v3.1.14
-pangolearn: 2021-10-13
-constellations: v0.0.18
-scorpio: v0.3.13
-pango-designation: v1.2.88
+pangolin: 4.0
+pangolin-data: 1.2.133
+constellations: 0.0.18
+scorpio: 0.3.13
 """
 
 if __name__ == "__main__":
@@ -40,21 +39,14 @@ if __name__ == "__main__":
             continue
 
         dependency, version = dep_ver.split(': ')
-        if dependency != "pangolearn" and not version.startswith("v"):
+        if not version.startswith("v"):
             version = "v" + version
-
-        # tidy up pango-designation version for dep we actually change
-        # instead of packages with pangolearn/usher models
-        if dependency == 'pango-designation aliases':
-            installed_ver_dict['pango-designation'] = version
-        else:
-            installed_ver_dict[dependency] = version
-
+        installed_ver_dict[dependency] = version
 
     # parse the dependency version file provided, validate real dependencies
     # tidy up version strings, and then use pip to update
-    valid_deps = ['pangolin', 'pangolearn', 'constellations',
-                  'scorpio', 'pango-designation']
+    valid_deps = ['pangolin', 'pangolin-data', 'constellations',
+                  'scorpio']
     print("## Changing installed versions as needed:")
     versions = {}
     with open(args.versions_file) as fh:
@@ -70,7 +62,7 @@ if __name__ == "__main__":
                                  f"dependency. Must be in {valid_deps}")
 
             # tidy up strings
-            if dependency != "pangolearn" and not version.startswith("v"):
+            if not version.startswith("v"):
                 version = "v" + version
 
             installed_version = installed_ver_dict[dependency]

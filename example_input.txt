@@ -1,5 +1,4 @@
-pangolin: v3.1.14
-pangolearn: 2021-10-13
+pangolin: v4.0.3
+pangolin-data: v1.2.133
 constellations: v0.0.18
-scorpio: v0.3.13
-pango-designation: v1.2.88
+scorpio: 0.3.15
