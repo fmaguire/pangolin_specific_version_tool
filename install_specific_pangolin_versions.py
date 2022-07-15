@@ -37,8 +37,7 @@ if __name__ == "__main__":
         # skip empty line at end
         if len(dep_ver) == 0:
             continue
-
-        dependency, version = dep_ver.split(': ')
+        dependency, version = dep_ver.replace(':', '').split()
         if not version.startswith("v"):
             version = "v" + version
         installed_ver_dict[dependency] = version
@@ -46,7 +45,7 @@ if __name__ == "__main__":
     # parse the dependency version file provided, validate real dependencies
     # tidy up version strings, and then use pip to update
     valid_deps = ['pangolin', 'pangolin-data', 'constellations',
-                  'scorpio']
+                  'scorpio', 'pangolin-assignment']
     print("## Changing installed versions as needed:")
     versions = {}
     with open(args.versions_file) as fh:

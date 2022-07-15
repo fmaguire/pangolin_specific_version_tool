@@ -1,5 +1,8 @@
 # Tool to install a specific set of pangolin dependency versions
 
+**NOTE: current version of tool only works for pangolin >= 4.0**
+If you want/need support across major pangolin releases feel free to submit a PR!
+
 Simple script to support upgrading/downgrading a [pangolin](https://github.com/cov-lineages/pangolin) v4
 install to a specific version of pangolin with specific dependency versions (e.g., [assignment models](https://github.com/cov-lineages/pangoLEARN), 
 [scorpio](https://github.com/cov-lineages/scorpio), 
@@ -20,10 +23,11 @@ This doesn't have to include all dependencies if not all need pinned to a specif
 
 `example_input.txt` contains:
 ```
-pangolin: 4.0
-pangolin-data: 1.2.133
-constellations: 0.1.4
-scorpio: 0.3.16
+pangolin: 4.1.1
+pangolin-data: v1.11
+pangolin-assignment: v1.11
+scorpio: v0.3.17
+constellations: v0.1.10
 ```
 
 ## Example Usage
@@ -41,18 +45,30 @@ that have been installed by the script (this should match the versions in the
 input file):
 
 ```
-## Current pangolin install:
-pangolin: 3.1.11
-pangolearn: 2021-09-17
-constellations: v0.0.15
-scorpio: 0.3.12
-pango-designation: 1.2.77
+## Existing pangolin install:
+pangolin: 4.1.1
+pangolin-data: 1.11
+constellations: v0.1.10
+scorpio: 0.3.17
+pangolin-assignment: 1.9
+usher 0.5.3
+gofasta 1.0.0
+minimap2 2.24-r1122
 
-## Pangolin and dependencies updated to:
-pangolin: 3.1.14
-pangolearn: 2021-10-13
-constellations: v0.0.18
-scorpio: 0.3.13
-pango-designation used by pangoLEARN/Usher: v1.2.86
-pango-designation aliases: 1.2.88
+## Changing installed versions as needed:
+pangolin not updated as requested v4.1.1 already installed
+pangolin-data not updated as requested v1.11 already installed
+Changing pangolin-assignment from v1.9 to v1.11
+scorpio not updated as requested v0.3.17 already installed
+constellations not updated as requested v0.1.10 already installed
+
+## Pangolin and dependencies now:
+pangolin: 4.1.1
+pangolin-data: 1.11
+constellations: v0.1.10
+scorpio: 0.3.17
+pangolin-assignment: 1.11
+usher 0.5.3
+gofasta 1.0.0
+minimap2 2.24-r1122
 ```
